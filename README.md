@@ -1,0 +1,2 @@
+# middleware test
+藉由middleware讓開發者可以在畫面載入從後台server log看到載入時間、方法以及網址

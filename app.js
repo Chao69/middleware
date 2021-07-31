@@ -1,14 +1,19 @@
 const express = require('express')
+const moment = require('moment');
 const app = express()
 const port = 3000
 
-let date = new Date()
+const currentTime = moment().format('YYYY/MM/DD HH:mm:ss')
+let spendTime = 0
 
 app.use((req, res, next) => {
+  let reqTime = Date.now()
   const method = req.method
   const url = req.originalUrl
-  console.log(`${date} | ${method} from ${url}`)
   next()
+  let resTime = Date.now()
+  let spendTime = resTime - reqTime
+  console.log(`${currentTime} | ${method} from ${url} | spend ${spendTime}ms to loading`)
 })
 
 app.get('/', (req, res,) => {
