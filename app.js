@@ -4,16 +4,18 @@ const app = express()
 const port = 3000
 
 const currentTime = moment().format('YYYY/MM/DD HH:mm:ss')
-let spendTime = 0
 
 app.use((req, res, next) => {
-  let reqTime = Date.now()
+  const reqTime = new Date()
   const method = req.method
   const url = req.originalUrl
+  
+  res.on('finish', () => {
+    const resTime = new Date()
+    const spendTime = resTime - reqTime
+    console.log(`${currentTime} | ${method} from ${url} | spend ${spendTime}ms to loading`)
+  })
   next()
-  let resTime = Date.now()
-  let spendTime = resTime - reqTime
-  console.log(`${currentTime} | ${method} from ${url} | spend ${spendTime}ms to loading`)
 })
 
 app.get('/', (req, res,) => {
